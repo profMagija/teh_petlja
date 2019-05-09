@@ -58,10 +58,8 @@ def plot_xy(xs, ys, keep_aspect=False, title=None, lbls=None):
     plt.plot(xs, ys)
     plt.show()
 
-def main():
-    
-    angle = np.linspace(0, 90, 1000)
-    x, y, vx, vy = get_initial_cond(10.0, angle)
+def simulate(vstart, angle):
+    x, y, vx, vy = get_initial_cond(vstart, angle)
     x_arr, y_arr = [x], [y]
     max_h = 0
     max_range = 0
@@ -75,6 +73,14 @@ def main():
 
         max_h = update_max_h(max_h, x, y)
         max_range = update_max_range(max_range, x, y)
+
+    return x_arr, y_arr, max_h, max_range
+
+
+def main():
+    
+    angle = np.linspace(0, 90, 1000)
+    _, _, max_h, max_range = simulate(10.0, angle)
 
     # plot_xy(x_arr, y_arr)
     plot_xy(angle, max_h, title='Zavisnost maksimalne visine od ugla', lbls=['ugao [°]', 'maksimalna visina [m]'])
